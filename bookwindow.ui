@@ -108,6 +108,9 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
    </widget>
    <widget class="QLineEdit" name="dbName">
     <property name="geometry">

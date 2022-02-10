@@ -1,9 +1,9 @@
 TEMPLATE = app
 INCLUDEPATH += .
 
-HEADERS     = bookdelegate.h bookwindow.h initdb.h
+HEADERS     = bookwindow.h initdb.h
 RESOURCES   = books.qrc
-SOURCES     = bookdelegate.cpp main.cpp bookwindow.cpp
+SOURCES     = main.cpp bookwindow.cpp
 FORMS       = bookwindow.ui
 
 QT += sql widgets widgets
