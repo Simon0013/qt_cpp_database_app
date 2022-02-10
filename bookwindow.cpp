@@ -1,5 +1,6 @@
 #include "bookwindow.h"
 #include "initdb.h"
+#include "mainmenu.h"
 
 #include <QtSql>
 
@@ -37,5 +38,8 @@ void BookWindow::on_okButton_clicked()
         showError(err);
         return;
     }
+    hide();
+    MainMenu menuWin;
+    menuWin.show();
 }
 
