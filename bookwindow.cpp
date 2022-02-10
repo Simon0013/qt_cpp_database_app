@@ -15,6 +15,11 @@ void BookWindow::showError(const QSqlError &err)
                 "Ошибка подключения к БД: " + err.text());
 }
 
+QSqlDatabase BookWindow::getDbConn()
+{
+    return db;
+}
+
 
 void BookWindow::on_cancelButton_clicked()
 {

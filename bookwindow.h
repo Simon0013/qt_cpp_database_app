@@ -62,6 +62,7 @@ class BookWindow: public QMainWindow
     Q_OBJECT
 public:
     BookWindow();
+    QSqlDatabase getDbConn();
 
 private slots:
     void on_cancelButton_clicked();
@@ -71,8 +72,7 @@ private slots:
 private:
     void showError(const QSqlError &err);
     Ui::BookWindow ui;
-    QSqlRelationalTableModel *model;
-    int authorIdx, genreIdx;
+    QSqlDatabase db;
 };
 
 #endif

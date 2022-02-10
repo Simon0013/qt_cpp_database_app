@@ -5,7 +5,7 @@
 
 QSqlError initDb(QString server, QString uid, QString pwd, QString database)
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC", "dbConn");
     QString connStr = "Driver={PostgreSQL ANSI};server=%1;uid=%2;pwd=%3;database=%4;";
     db.setDatabaseName(connStr.arg(server).arg(uid).arg(pwd).arg(database));
 
