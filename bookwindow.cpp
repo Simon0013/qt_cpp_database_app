@@ -40,6 +40,6 @@ void BookWindow::on_okButton_clicked()
     }
     hide();
     MainMenu menuWin;
-    menuWin.show();
+    menuWin.exec();
 }
 

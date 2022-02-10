@@ -2,7 +2,7 @@
 #include "ui_mainmenu.h"
 
 MainMenu::MainMenu(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::MainMenu)
 {
     ui->setupUi(this);
