@@ -2,12 +2,18 @@ TEMPLATE = app
 INCLUDEPATH += .
 
 HEADERS     = bookwindow.h initdb.h \
-    mainmenu.h
+    editdatawindow.h \
+    mainmenu.h \
+    showwindow.h
 RESOURCES   = books.qrc
 SOURCES     = main.cpp bookwindow.cpp \
-    mainmenu.cpp
+    editdatawindow.cpp \
+    mainmenu.cpp \
+    showwindow.cpp
 FORMS       = bookwindow.ui \
-    mainmenu.ui
+    editdatawindow.ui \
+    mainmenu.ui \
+    showwindow.ui
 
 QT += sql widgets widgets
 

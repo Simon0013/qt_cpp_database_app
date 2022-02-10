@@ -1,5 +1,7 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
+#include "showwindow.h"
+#include "editdatawindow.h"
 #include <QSqlDatabase>
 
 MainMenu::MainMenu(QWidget *parent) :
@@ -25,19 +27,24 @@ void MainMenu::on_exitButton_clicked()
 void MainMenu::on_chooseButton_clicked()
 {
     if (ui->showMusicButton->isChecked()) {
-
+        ShowWindow *sw = new ShowWindow();
+        sw->show();
     }
     else if (ui->showDiscButton->isChecked()) {
-
+        ShowWindow *sw = new ShowWindow();
+        sw->show();
     }
     else if (ui->showRatingButton->isChecked()) {
-
+        ShowWindow *sw = new ShowWindow();
+        sw->show();
     }
     else if (ui->editDiscButton->isChecked()) {
-
+        EditDataWindow *edw = new EditDataWindow();
+        edw->show();
     }
     else if (ui->addEnsembleButton->isChecked()) {
-
+        EditDataWindow *edw = new EditDataWindow();
+        edw->show();
     }
 }
 

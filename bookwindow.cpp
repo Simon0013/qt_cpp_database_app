@@ -44,7 +44,7 @@ void BookWindow::on_okButton_clicked()
         return;
     }
     hide();
-    MainMenu menuWin;
-    menuWin.exec();
+    MainMenu *menuWin = new MainMenu();
+    menuWin->show();
 }
 
