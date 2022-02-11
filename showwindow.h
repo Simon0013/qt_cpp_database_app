@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSqlTableModel>
+#include <QSqlQuery>
 
 namespace Ui {
 class ShowWindow;
@@ -23,11 +24,14 @@ private slots:
 
     void on_musicianButton_clicked();
 
+    void on_showCompButton_clicked();
+
 private:
     Ui::ShowWindow *ui;
     QSqlTableModel *model = new QSqlTableModel(Q_NULLPTR, QSqlDatabase::database("dbConn"));
     bool modelInitialized = false;
     void modelInitialize();
+    QSqlQuery *query;
 };
 
 #endif // SHOWWINDOW_H
