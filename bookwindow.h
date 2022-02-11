@@ -69,6 +69,8 @@ private slots:
 
     void on_okButton_clicked();
 
+    void on_defaultFullButton_clicked();
+
 private:
     void showError(const QSqlError &err);
     Ui::BookWindow ui;

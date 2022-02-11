@@ -2,6 +2,7 @@
 #include "ui_mainmenu.h"
 #include "showwindow.h"
 #include "showwindow2.h"
+#include "ratingwindow.h"
 #include "editdatawindow.h"
 #include <QSqlDatabase>
 
@@ -19,7 +20,7 @@ MainMenu::~MainMenu()
 
 void MainMenu::on_exitButton_clicked()
 {
-    QSqlDatabase::database().close();
+    QSqlDatabase::database("dbConn").close();
     QSqlDatabase::removeDatabase("dbConn");
     close();
 }
@@ -36,8 +37,8 @@ void MainMenu::on_chooseButton_clicked()
         sw->show();
     }
     else if (ui->showRatingButton->isChecked()) {
-        ShowWindow *sw = new ShowWindow();
-        sw->show();
+        RatingWindow *rw = new RatingWindow();
+        rw->show();
     }
     else if (ui->editDiscButton->isChecked()) {
         EditDataWindow *edw = new EditDataWindow();

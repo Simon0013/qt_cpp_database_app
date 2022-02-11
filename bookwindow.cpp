@@ -48,3 +48,11 @@ void BookWindow::on_okButton_clicked()
     menuWin->show();
 }
 
+
+void BookWindow::on_defaultFullButton_clicked()
+{
+    ui.serverName->setText("127.0.0.1");
+    ui.userName->setText("postgres");
+    ui.dbName->setText("music_store");
+}
+
