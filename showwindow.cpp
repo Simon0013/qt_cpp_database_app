@@ -42,7 +42,7 @@ void ShowWindow::on_comboBox_currentTextChanged(const QString &arg1)
     }
     ui->tableView->resizeColumnsToContents();
     ui->tableView->resizeRowsToContents();
-    QString countLabelTxt = "Итого найдено пластинок: %1";
+    QString countLabelTxt = "Итого найдено исполнений: %1";
     ui->countLabel->setText(countLabelTxt.arg(ui->tableView->model()->rowCount()));
 }
 

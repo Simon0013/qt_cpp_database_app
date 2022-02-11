@@ -1,6 +1,7 @@
 #include "mainmenu.h"
 #include "ui_mainmenu.h"
 #include "showwindow.h"
+#include "showwindow2.h"
 #include "editdatawindow.h"
 #include <QSqlDatabase>
 
@@ -31,7 +32,7 @@ void MainMenu::on_chooseButton_clicked()
         sw->show();
     }
     else if (ui->showDiscButton->isChecked()) {
-        ShowWindow *sw = new ShowWindow();
+        ShowWindow2 *sw = new ShowWindow2();
         sw->show();
     }
     else if (ui->showRatingButton->isChecked()) {
