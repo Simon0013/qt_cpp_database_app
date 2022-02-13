@@ -82,6 +82,7 @@ void InputDataWindow::on_saveButton_clicked()
         QMessageBox::critical(this, "Ошибка вставки значений в БД", query->lastError().text());
     else
     {
+        QMessageBox::information(this, "Изменения сохранены", "Изменения успешно сохранены в БД");
         if (elemId != 0)
             pModel->setQuery("SELECT disc.id, disc.name AS Название, releaser.name AS Производитель, provider.name AS Поставщик, create_date AS Дата_создания, "
                             "retail_price AS Розничная_цена, wholesale_price AS Оптовая_цена, selled_past_year AS Продано_в_прошлом_году, "

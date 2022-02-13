@@ -4,6 +4,7 @@
 #include "showwindow2.h"
 #include "ratingwindow.h"
 #include "editdatawindow.h"
+#include "addensemble.h"
 #include <QSqlDatabase>
 
 MainMenu::MainMenu(QWidget *parent) :
@@ -45,8 +46,8 @@ void MainMenu::on_chooseButton_clicked()
         edw->show();
     }
     else if (ui->addEnsembleButton->isChecked()) {
-        EditDataWindow *edw = new EditDataWindow();
-        edw->show();
+        AddEnsemble *ae = new AddEnsemble();
+        ae->show();
     }
 }
 

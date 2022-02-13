@@ -1,33 +1,33 @@
-#include "bookwindow.h"
+#include "dbwindow.h"
 #include "initdb.h"
 #include "mainmenu.h"
 
 #include <QtSql>
 
-BookWindow::BookWindow()
+DbWindow::DbWindow()
 {
     ui.setupUi(this);
 }
 
-void BookWindow::showError(const QSqlError &err)
+void DbWindow::showError(const QSqlError &err)
 {
     QMessageBox::critical(this, "Невозможно подключиться к БД",
                 "Ошибка подключения к БД: " + err.text());
 }
 
-QSqlDatabase BookWindow::getDbConn()
+QSqlDatabase DbWindow::getDbConn()
 {
     return db;
 }
 
 
-void BookWindow::on_cancelButton_clicked()
+void DbWindow::on_cancelButton_clicked()
 {
     close();
 }
 
 
-void BookWindow::on_okButton_clicked()
+void DbWindow::on_okButton_clicked()
 {
     if (!QSqlDatabase::drivers().contains("QODBC"))
         QMessageBox::critical(this, "Невозможно подключиться к БД",
@@ -49,7 +49,7 @@ void BookWindow::on_okButton_clicked()
 }
 
 
-void BookWindow::on_defaultFullButton_clicked()
+void DbWindow::on_defaultFullButton_clicked()
 {
     ui.serverName->setText("127.0.0.1");
     ui.userName->setText("postgres");

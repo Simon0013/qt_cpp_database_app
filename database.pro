@@ -1,7 +1,8 @@
 TEMPLATE = app
 INCLUDEPATH += .
 
-HEADERS     = bookwindow.h initdb.h \
+HEADERS     = dbwindow.h initdb.h \
+    addensemble.h \
     compositionwindow.h \
     editdatawindow.h \
     inputdatawindow.h \
@@ -10,8 +11,8 @@ HEADERS     = bookwindow.h initdb.h \
     ratingwindow.h \
     showwindow.h \
     showwindow2.h
-RESOURCES   = books.qrc
-SOURCES     = main.cpp bookwindow.cpp \
+SOURCES     = main.cpp dbwindow.cpp \
+    addensemble.cpp \
     compositionwindow.cpp \
     editdatawindow.cpp \
     inputdatawindow.cpp \
@@ -20,7 +21,8 @@ SOURCES     = main.cpp bookwindow.cpp \
     ratingwindow.cpp \
     showwindow.cpp \
     showwindow2.cpp
-FORMS       = bookwindow.ui \
+FORMS       = dbwindow.ui \
+    addensemble.ui \
     compositionwindow.ui \
     editdatawindow.ui \
     inputdatawindow.ui \
@@ -32,5 +34,4 @@ FORMS       = bookwindow.ui \
 
 QT += sql widgets widgets
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sql/books
 INSTALLS += target

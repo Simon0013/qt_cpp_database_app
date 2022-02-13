@@ -85,6 +85,11 @@ void ShowWindow::on_musicianButton_clicked()
 
 void ShowWindow::on_showCompButton_clicked()
 {
+    if (ui->tableView->model() == nullptr)
+    {
+        QMessageBox::information(this, "Ничего не выбрано", "Для начала требуется выделить какой-нибудь экземпляр");
+        return;
+    }
     QModelIndexList indexes = ui->tableView->selectionModel()->selectedIndexes();
     QModelIndex index;
     if (indexes.isEmpty())
