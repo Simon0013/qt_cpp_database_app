@@ -12,12 +12,14 @@ InputDataWindow::InputDataWindow(QWidget *parent, int elemId, QSqlQueryModel *pa
     ui->setupUi(this);
     pModel = parentModel;
     this->elemId = elemId;
+    //в списки выбора варианта добавляем всех производителей и поставщиков
     query->exec("SELECT name FROM releaser");
     while (query->next())
         ui->releaserBox->addItem(query->value(0).toString());
     query->exec("SELECT name FROM provider");
     while (query->next())
         ui->providerBox->addItem(query->value(0).toString());
+    //если окно открыто на редактирование уже существующего элемента, заполняем все поля существующими значениями
     if (elemId > 0)
     {
         QString queryTxt = "SELECT * FROM disc WHERE id = %1";
@@ -43,6 +45,7 @@ InputDataWindow::InputDataWindow(QWidget *parent, int elemId, QSqlQueryModel *pa
                    "perfomance_id = id WHERE disc_id = %1";
         model->setQuery(queryTxt.arg(elemId), QSqlDatabase::database("dbConn"));
     }
+    //устанавливаем модель в представление
     ui->perfomancesView->setModel(model);
     ui->perfomancesView->resizeColumnsToContents();
 }
@@ -56,12 +59,14 @@ InputDataWindow::~InputDataWindow()
 
 void InputDataWindow::on_saveButton_clicked()
 {
+    //отыскиваем id выбранных производителя и поставщика
     QString queryTxt = "SELECT releaser.id, provider.id FROM releaser, provider "
             "WHERE releaser.name = '%1' AND provider.name = '%2'";
     query->exec(queryTxt.arg(ui->releaserBox->currentText()).arg(ui->providerBox->currentText()));
     query->next();
     QString releaserId = query->value(0).toString();
     QString providerId = query->value(1).toString();
+    //подготавливаем текст запроса на вставку или редактирование
     if (elemId == 0)
         query->prepare("INSERT INTO disc VALUES (nextval('disc_id_seq'), ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     else
@@ -78,13 +83,13 @@ void InputDataWindow::on_saveButton_clicked()
     query->addBindValue(ui->stockEdit->text());
     if (elemId != 0)
         query->addBindValue(ui->idEdit->text());
+    //если запрос не смог выполниться, выводим окно с сообщением об ошибке
     if (!query->exec())
         QMessageBox::critical(this, "Ошибка вставки значений в БД", query->lastError().text());
     else
     {
-        QMessageBox::information(this, "Изменения сохранены", "Изменения успешно сохранены в БД");
-        if (elemId != 0)
-            pModel->setQuery("SELECT disc.id, disc.name AS Название, releaser.name AS Производитель, provider.name AS Поставщик, create_date AS Дата_создания, "
+        //выполняем обновление таблицы пластинок
+        pModel->setQuery("SELECT disc.id, disc.name AS Название, releaser.name AS Производитель, provider.name AS Поставщик, create_date AS Дата_создания, "
                             "retail_price AS Розничная_цена, wholesale_price AS Оптовая_цена, selled_past_year AS Продано_в_прошлом_году, "
                             "selled_this_year AS Продано_в_этом_году, stock AS В_наличии FROM disc INNER JOIN releaser ON "
                             "creater_id = releaser.id INNER JOIN provider ON provider_id = provider.id ORDER BY disc.id", QSqlDatabase::database("dbConn"));
@@ -101,7 +106,7 @@ void InputDataWindow::on_cancelButton_clicked()
 
 void InputDataWindow::on_addPerfButton_clicked()
 {
-    PerfomanceWindow *pw = new PerfomanceWindow(nullptr, elemId);
+    PerfomanceWindow *pw = new PerfomanceWindow(nullptr, elemId, 0, model);
     pw->show();
 }
 
@@ -109,15 +114,21 @@ void InputDataWindow::on_addPerfButton_clicked()
 void InputDataWindow::on_delPerfButton_clicked()
 {
     QModelIndexList indexes =ui->perfomancesView->selectionModel()->selectedIndexes();
+    //если не выбраны элементы для удаления, открываем весь список исполнений
     if (indexes.isEmpty())
     {
-        PerfomanceWindow *pw = new PerfomanceWindow(nullptr, elemId, 1);
+        PerfomanceWindow *pw = new PerfomanceWindow(nullptr, elemId, 1, model);
         pw->show();
     }
     else {
         QModelIndex index;
+        QList<int> passedRows;
         foreach (index, indexes)
         {
+            //если строка уже встречалась ранее, пропускаем её
+            if (passedRows.contains(index.row()))
+                continue;
+            //подготавливаем запрос на удаление
             int id = ui->perfomancesView->model()->index(index.row(), 0).data().toInt();
             QString queryTxt = "DELETE FROM perfomance_disc WHERE perfomance_id = ? AND disc_id = ?";
             query->prepare(queryTxt);
@@ -127,12 +138,15 @@ void InputDataWindow::on_delPerfButton_clicked()
                 QMessageBox::critical(this, "Ошибка редактирования данных в БД", query->lastError().text());
             else
                 QMessageBox::information(this, "Изменения сохранены", "Изменения успешно сохранены в БД");
+            //выполняем обновление таблицы исполнений
             queryTxt = "SELECT id, Произведение, Ансамбль AS Исполнитель FROM perfomance_view_ensemble INNER JOIN perfomance_disc ON "
                        "perfomance_id = id WHERE disc_id = %1 UNION "
                        "SELECT id, Произведение, Исполнитель FROM perfomance_view_musician INNER JOIN perfomance_disc ON "
                        "perfomance_id = id WHERE disc_id = %1";
             model->setQuery(queryTxt.arg(elemId), QSqlDatabase::database("dbConn"));
             ui->perfomancesView->resizeColumnsToContents();
+            //отмечаем строку как пройденную
+            passedRows << index.row();
         }
     }
 }
@@ -140,6 +154,7 @@ void InputDataWindow::on_delPerfButton_clicked()
 
 void InputDataWindow::on_refreshButton_clicked()
 {
+    //выполняем обновление таблицы исполнений
     QString queryTxt = "SELECT id, Произведение, Ансамбль AS Исполнитель FROM perfomance_view_ensemble INNER JOIN perfomance_disc ON "
                "perfomance_id = id WHERE disc_id = %1 UNION "
                "SELECT id, Произведение, Исполнитель FROM perfomance_view_musician INNER JOIN perfomance_disc ON "

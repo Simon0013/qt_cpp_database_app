@@ -12,7 +12,6 @@ class DbWindow: public QMainWindow
     Q_OBJECT
 public:
     DbWindow();
-    QSqlDatabase getDbConn();
 
 private slots:
     void on_cancelButton_clicked();

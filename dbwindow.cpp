@@ -9,15 +9,11 @@ DbWindow::DbWindow()
     ui.setupUi(this);
 }
 
+//функция выводит окно с сообщением об ошибке
 void DbWindow::showError(const QSqlError &err)
 {
     QMessageBox::critical(this, "Невозможно подключиться к БД",
                 "Ошибка подключения к БД: " + err.text());
-}
-
-QSqlDatabase DbWindow::getDbConn()
-{
-    return db;
 }
 
 
@@ -29,6 +25,7 @@ void DbWindow::on_cancelButton_clicked()
 
 void DbWindow::on_okButton_clicked()
 {
+    //проверка наличия драйвера ODBC для подключения к серверу баз данных
     if (!QSqlDatabase::drivers().contains("QODBC"))
         QMessageBox::critical(this, "Невозможно подключиться к БД",
                               "Для этого проекта необходим ODBC драйвер");
@@ -43,6 +40,7 @@ void DbWindow::on_okButton_clicked()
         showError(err);
         return;
     }
+    //в случае успеха выводим окно главного меню портала
     hide();
     MainMenu *menuWin = new MainMenu();
     menuWin->show();
@@ -51,6 +49,7 @@ void DbWindow::on_okButton_clicked()
 
 void DbWindow::on_defaultFullButton_clicked()
 {
+    //заполняем форму для ввода данных данными "по умолчанию"
     ui.serverName->setText("127.0.0.1");
     ui.userName->setText("postgres");
     ui.dbName->setText("music_store");

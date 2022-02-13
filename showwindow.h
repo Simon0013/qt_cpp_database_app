@@ -31,7 +31,7 @@ private:
     QSqlTableModel *model = new QSqlTableModel(Q_NULLPTR, QSqlDatabase::database("dbConn"));
     bool modelInitialized = false;
     void modelInitialize();
-    QSqlQuery *query;
+    QSqlQuery *query = new QSqlQuery(QSqlDatabase::database("dbConn"));
 };
 
 #endif // SHOWWINDOW_H

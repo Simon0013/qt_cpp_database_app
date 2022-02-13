@@ -21,6 +21,7 @@ MainMenu::~MainMenu()
 
 void MainMenu::on_exitButton_clicked()
 {
+    //уничтожаем подключение к базе данных при выходе из приложения
     QSqlDatabase::database("dbConn").close();
     QSqlDatabase::removeDatabase("dbConn");
     close();
@@ -29,6 +30,7 @@ void MainMenu::on_exitButton_clicked()
 
 void MainMenu::on_chooseButton_clicked()
 {
+    //в зависимости от выбранного действия открываем соответствующее окно
     if (ui->showMusicButton->isChecked()) {
         ShowWindow *sw = new ShowWindow();
         sw->show();

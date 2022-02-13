@@ -13,7 +13,7 @@ class PerfomanceWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit PerfomanceWindow(QWidget *parent = nullptr, int elemId = 0, int mode = 0);
+    explicit PerfomanceWindow(QWidget *parent = nullptr, int elemId = 0, int mode = 0, QSqlQueryModel *parentModel = nullptr);
     ~PerfomanceWindow();
 
 private slots:
@@ -25,6 +25,7 @@ private:
     Ui::PerfomanceWindow *ui;
     int elemId, mode;
     QSqlQueryModel *model = new QSqlQueryModel();
+    QSqlQueryModel *pModel;
 };
 
 #endif // PERFOMANCEWINDOW_H

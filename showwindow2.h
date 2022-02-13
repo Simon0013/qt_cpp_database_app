@@ -27,7 +27,7 @@ private slots:
 private:
     Ui::ShowWindow2 *ui;
     QStandardItemModel *model = new QStandardItemModel();
-    QSqlQuery *query;
+    QSqlQuery *query = new QSqlQuery(QSqlDatabase::database("dbConn"));
     QString chosen;
     bool comboBoxChangedAllowed;
     QStringList insertedIds;
