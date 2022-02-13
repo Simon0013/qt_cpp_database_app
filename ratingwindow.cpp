@@ -15,10 +15,20 @@ RatingWindow::RatingWindow(QWidget *parent) :
     ui->yearChooseBox->addItems(years.split(","));
     QString places = "1,3,5,7,10";
     ui->countTopBox->addItems(places.split(","));
+    QString headers = "id, Название, Производитель, Поставщик, Дата_выпуска, Розничная_цена, "
+                      "Оптовая_цена, Продано_в_прошлом_году, Продано_в_текущем_году, "
+                      "В_наличии";
+    for (int i = 0; i < model->columnCount(); i++)
+    {
+        QString header = headers.split(",")[i];
+        model->setHeaderData(i, Qt::Horizontal, header);
+    }
+    ui->tableView->resizeColumnsToContents();
 }
 
 RatingWindow::~RatingWindow()
 {
+    delete model;
     delete ui;
 }
 
@@ -30,6 +40,7 @@ void RatingWindow::on_yearChooseBox_currentIndexChanged(int index)
         yearColumnIndex = 8;
     model->setSort(yearColumnIndex, sortOrder);
     model->select();
+    ui->tableView->resizeColumnsToContents();
 }
 
 
@@ -41,6 +52,7 @@ void RatingWindow::on_descOrderBox_stateChanged(int arg1)
         sortOrder = Qt::AscendingOrder;
     model->setSort(yearColumnIndex, sortOrder);
     model->select();
+    ui->tableView->resizeColumnsToContents();
 }
 
 
@@ -66,5 +78,6 @@ void RatingWindow::on_countTopBox_currentTextChanged(const QString &arg1)
     if (sortOrder == Qt::AscendingOrder)
         model->setSort(yearColumnIndex, Qt::AscendingOrder);
     model->select();
+    ui->tableView->resizeColumnsToContents();
 }
 

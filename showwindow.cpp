@@ -1,6 +1,7 @@
 #include "showwindow.h"
 #include "ui_showwindow.h"
 #include "compositionwindow.h"
+#include <QMessageBox>
 #include <QtSql>
 
 ShowWindow::ShowWindow(QWidget *parent) :
@@ -86,6 +87,11 @@ void ShowWindow::on_showCompButton_clicked()
 {
     QModelIndexList indexes = ui->tableView->selectionModel()->selectedIndexes();
     QModelIndex index;
+    if (indexes.isEmpty())
+    {
+        QMessageBox::information(this, "Ничего не выбрано", "Для начала требуется выделить какой-нибудь экземпляр");
+        return;
+    }
     foreach (index, indexes)
     {
         QString comp = ui->tableView->model()->index(index.row(), 0).data().toString();
